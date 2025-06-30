@@ -35,9 +35,9 @@ def get_command(lmList):
         cv2.line(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
         length = math.hypot(x2 - x1, y2 - y1)
         if length < 30:
-            return "slow" + fingers
+            return "slow " + fingers
         else:
-            return "fast" + fingers
+            return "fast " + fingers
 
     # turn left
     elif lmList[8][1] < lmList[7][1] and lmList[8][2] < lmList[18][2]:
@@ -73,6 +73,7 @@ try:
         lmList = detector.findPosition(img, draw=False)
         if len(lmList) != 0:
             results = get_command(lmList)
+            print(results)
             sock.sendall(results.encode() + b'\n')
         cv2.imshow("Img", img)
         cv2.waitKey(1)
